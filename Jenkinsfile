@@ -1,8 +1,8 @@
 pipeline {
   agent any
 
-  environment {
-    NEW_VERSION = '1.3.0'
+  tools {
+    maven 'Maven'
   }
 
   stages {
@@ -10,7 +10,6 @@ pipeline {
     stage("build") {
       steps {
         echo 'building the application...'
-        echo "building new version ${NEW_VERSION}"
       }
     }
 
@@ -29,12 +28,6 @@ pipeline {
 
       steps {
         echo 'deploying the application...'
-        withCredentials(
-            usernamePassword(credentials: 'global', usernameVariable: USER, passwordVariable: PWD)
-        ) {
-            sh "some script ${USER} and ${PWD}"
-        }
-
       }
     }
 
