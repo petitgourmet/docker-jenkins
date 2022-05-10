@@ -3,7 +3,6 @@ pipeline {
 
   environment {
     NEW_VERSION = '1.3.0'
-    SERVER_CREDENTIALS = credentials('global')
   }
 
   stages {
@@ -31,7 +30,7 @@ pipeline {
       steps {
         echo 'deploying the application...'
         withCredentials(
-            usernamePassword(credentials: 'SERVER_CREDENTIALS', usernameVariable: USER, passwordVariable: PWD)
+            usernamePassword(credentials: 'global', usernameVariable: USER, passwordVariable: PWD)
         ) {
             sh "some script ${USER} and ${PWD}"
         }
