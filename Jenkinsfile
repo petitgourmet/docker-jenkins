@@ -1,8 +1,10 @@
 pipeline {
   agent any
 
-  tools {
-    maven 'Maven'
+  parameters {
+    string(name: 'VERSION', defaultValue: '', description: 'version to deploy on prod')
+    choice(name: 'VERSION', choices: ['1.1.0','1.2.0','1.3.0'], description: 'version to choose to deploy')
+    booleanParam(name: 'executeTests', defaultValue: true, description: '')
   }
 
   stages {
@@ -16,7 +18,7 @@ pipeline {
     stage("test") {
       when {
 				expression {
-					BRANCH_NAME == 'dev' || BRANCH_NAME == 'main'
+					params.executeTests
 				}
 			}
       steps {
